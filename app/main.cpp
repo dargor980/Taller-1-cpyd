@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Convertidor.h"
-#include "Functions.h"
+#include "Functions.cpp"
 
 int main(int argc, char **argv)
 {
