@@ -19,7 +19,7 @@ int ColorMax(int r, int g, int b){
     } else return b;
 }
 
-int ColorMax(int r, int g, int b){
+int ColorMin(int r, int g, int b){
     if(r < g){
         if(r < b){
             return r;
@@ -33,17 +33,17 @@ int CalcularHue(int cmin, int cmax, int diff, int r, int g, int b){
     if(cmax == 0 && cmin == 0){
         return 0;
     } else if(cmax == r){
-        return (60* ((g - b) / diff) + 360) % 360;
+        return ((60* ((g - b) / diff) + 360) % 360);
     } else if(cmax == g){
-        return (60* ((b - r) / diff) + 120) % 360;
-    } else return (60 *((r-g) / diff) + 240) % 360;
+        return ((60* ((b - r) / diff) + 120) % 360);
+    } else return ((60 *((r-g) / diff) + 240) % 360);
 
 }
 
 int CalcularSaturacion(int cmax, int diff){
     if(cmax == 0){
         return 0;
-    } else return (diff / cmax)*100;
+    } else return ((diff / cmax)*100);
 }
 
 int CalcularValue(int cmax){

@@ -1,14 +1,24 @@
 #include "Convertidor.h"
 #include "Functions.h"
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
-#include "stb/stb_image_write.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb/stb_image_write.h"
 Convertidor::Convertidor()
 {
 }
 
 Convertidor::Convertidor(const char *filepath)
 {
+    this->channelCount = 4;
+    this->pixels = stbi_load(filepath, &this->width, &this->heigth, &this->bpp, channelCount);
+    if (!pixels) {
+        this->bpp = 0;
+        this->width = 0;
+        this->heigth = 0;
+        this->channelCount = 0;
+    }
 }
 
 Convertidor::~Convertidor()
@@ -72,7 +82,7 @@ std::string Convertidor::Gray2Color() {
         // Indica el indice en el cuál estoy parado
         unsigned long long index = 0;
         unsigned char* jpg = new unsigned char[width * heigth * 3];
-
+        std::cout<<"Entro uwu ";
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < heigth; y++) {
                 unsigned char block = channelCount;
@@ -84,26 +94,30 @@ std::string Convertidor::Gray2Color() {
                 int blue = (int) pixel[2];
 
                 int h,s,v;
-                red = red / 255;
-                green = green / 255;
-                blue = blue / 255;
+                red = (int) red / 255;
+                green = (int) green / 255;
+                blue = (int) blue / 255;
                 int cmax = ColorMax(red,green,blue);
                 int cmin = ColorMin(red,green,blue);
                 int diff = cmax - cmin;
+                
+                //EN esas 3 funciones esta el problema
                 h = CalcularHue(cmin,cmax,diff,red,green,blue);
                 s = CalcularSaturacion(cmax, diff);
                 v = CalcularValue(cmax);
                 
 
-
-                // int alpha = (int) channelCount >= 4 ? pixel[3] : 0xff;
-
-                // int gray = 0.299 * red + 0.587 * green + 0.114 * blue;
-                int gray = (red + green + blue) / 3;
+                
                 for (int c = 0; c < 3; c++) {
-                    jpg[index] = gray;
+                    if(index == 0){
+                        jpg[index] = h;
+                    }else if( index == 1){
+                        jpg[index] = s;
+                    }else{
+                        jpg[index] = v;
+                    }
                     index += 1;
-                }
+                } 
             }
         }
 
