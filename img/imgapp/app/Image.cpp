@@ -5,6 +5,7 @@
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb/stb_image_write.h"
+#include "Functions.h"
 
 Image::Image() {
     this->bpp = 0;
@@ -95,6 +96,61 @@ std::string Image::toGrayScale() {
                     jpg[index] = gray;
                     index += 1;
                 }
+            }
+        }
+
+        path = "gris.jpg";
+        stbi_write_jpg(path.c_str(), width, height, 3, jpg, 100);
+
+        delete[] jpg;
+    }
+
+    return path;
+}
+
+std::string Image::toColorScale() {
+    std::string path("");
+
+    if (pixels) {
+        // Indica el indice en el cuál estoy parado
+        unsigned long long index = 0;
+        unsigned char* jpg = new unsigned char[width * height * 3];
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                unsigned char block = channelCount;
+                // Defino un arreglo que contiene todo el bloque de datos que me interesa
+                unsigned char* pixel = pixels + (y + height * x) * block;
+
+                int red = (int) pixel[0];
+                int green = (int) pixel[1];
+                int blue = (int) pixel[2];
+
+                int h,s,v;
+                red = red / 255;
+                green = green / 255;
+                blue = blue / 255;
+                int cmax = ColorMax(red,green,blue);
+                int cmin = ColorMin(red,green,blue);
+                int diff = cmax - cmin;
+
+                h = CalcularHue(cmin, cmax, diff, red, green, blue);
+                s = CalcularSaturacion(cmax, diff);
+                v = CalcularValue(cmax);
+
+                //AHora hay que ver como pasar esta info hsv a info de cada pixel del jpg.
+
+                
+
+
+                // int alpha = (int) channelCount >= 4 ? pixel[3] : 0xff;
+
+                // int gray = 0.299 * red + 0.587 * green + 0.114 * blue;
+                /*int gray = (red + green + blue) / 3;
+                for (int c = 0; c < 3; c++) {
+                    jpg[index] = gray;
+                    index += 1;
+                }*/
             }
         }
 

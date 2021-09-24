@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include<math.h>
+
 
 class Image {
 public:
@@ -87,6 +89,7 @@ public:
      * @return El nombre de archivo generado.
      */
     std::string toGrayScale();
+    std::string toColorScale();
 
 private:
     int width;
