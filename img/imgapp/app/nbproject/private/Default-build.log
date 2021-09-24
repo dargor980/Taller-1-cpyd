@@ -1,5 +1,0 @@
-rm -fr *.o a.out build dist
-mkdir -p build dist
-g++ -std=c++11 -g3 -Wall -fopenmp -c main.cpp -o build/main.o
-g++ -std=c++11 -g3 -Wall -fopenmp -o dist/programa build/main.o -lm
-rm -fr build

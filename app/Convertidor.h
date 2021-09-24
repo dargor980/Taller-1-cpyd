@@ -2,7 +2,7 @@
 #define CONVERTIDOR_H
 
 #include <iostream>
-
+#include <omp.h>
 class Convertidor
 {
 public:
@@ -12,7 +12,7 @@ public:
      * */
     Convertidor();
 
-    Convertidor(const char *path);
+    Convertidor(const char *filepath, const char *output);
 
     /**
      * Destructor de la clase
@@ -81,6 +81,7 @@ private:
     int bpp;
     int channelCount;
     unsigned char *pixels;
+    const char *output;
 };
 
 #endif /* CONVERTIDOR_H */

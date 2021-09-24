@@ -9,7 +9,7 @@ Convertidor::Convertidor()
 {
 }
 
-Convertidor::Convertidor(const char *filepath)
+Convertidor::Convertidor(const char *filepath, const char *output)
 {
     this->channelCount = 4;
     this->pixels = stbi_load(filepath, &this->width, &this->heigth, &this->bpp, channelCount);
@@ -19,6 +19,8 @@ Convertidor::Convertidor(const char *filepath)
         this->heigth = 0;
         this->channelCount = 0;
     }
+    
+    this->output = output;
 }
 
 Convertidor::~Convertidor()
@@ -76,15 +78,17 @@ void Convertidor::SetPixels(unsigned char *pixels)
 }
 
 std::string Convertidor::Gray2Color() {
-    std::string path("");
+    std::string path(this->output);
 
     if (pixels) {
         // Indica el indice en el cuál estoy parado
         unsigned long long index = 0;
         unsigned char* jpg = new unsigned char[width * heigth * 3];
         std::cout<<"Entro uwu ";
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < heigth; y++) {
+        int x, y;
+
+        for (x = 0; x < width; x++) {
+            for (y = 0; y < heigth; y++) {
                 unsigned char block = channelCount;
                 // Defino un arreglo que contiene todo el bloque de datos que me interesa
                 unsigned char* pixel = pixels + (y + heigth * x) * block;
@@ -100,13 +104,16 @@ std::string Convertidor::Gray2Color() {
                 float diff = cmax - cmin;
                 
                 //EN esas 3 funciones esta el problema
+
                 h = CalcularHue(cmin,cmax,diff,red,green,blue);
                 s = CalcularSaturacion(cmax, diff);
                 v = CalcularValue(cmax);
-                int gray = (red + green + blue) / 3;
-                for (int c = 0; c < 3; c++) {
-                    if(c == 0){
 
+                int gray = (red + green + blue) / 3;
+
+                int c = 0;
+                for (c = 0; c < 3; c++) {
+                    if(c == 0){
                         jpg[index] = h+gray;
                     } else{
                         if(c == 1){
@@ -116,16 +123,13 @@ std::string Convertidor::Gray2Color() {
                         }
                     }
                     index += 1;
-                }
-               
+                }  
             }
         }
-
-        path = "gris.jpg";
+        path += "gris.jpg";
         stbi_write_jpg(path.c_str(), width, heigth, 3, jpg, 100);
 
         delete[] jpg;
     }
-
     return path;
 }

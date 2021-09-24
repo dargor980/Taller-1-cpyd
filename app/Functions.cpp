@@ -1,5 +1,5 @@
 #include "Functions.h"
-
+#include<bits/stdc++.h>
 void MostrarGrupo()
 {
     std::cout << std::endl << "Taller 1 Computacion paralela y distribuida" << std::endl;
