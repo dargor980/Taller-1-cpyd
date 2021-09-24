@@ -15,7 +15,7 @@ void MostrarGrupo();
  * 
  * @return El valor máximo.
  * */
-int ColorMax(int r, int g, int b);
+float ColorMax(float r, float g, float b);
 
 /**
  * @param r color rojo.
@@ -24,7 +24,7 @@ int ColorMax(int r, int g, int b);
  * 
  * @return El valor mínimo.
  * */
-int ColorMin(int r, int g, int b);
+float ColorMin(float r, float g, float b);
 
 /**
  * 
@@ -37,7 +37,7 @@ int ColorMin(int r, int g, int b);
  * 
  * @return valor Hue
  * */
-int CalcularHue(int cmin, int cmax, int diff, int r, int g, int b);
+float CalcularHue(float cmin, float cmax, float diff, float r, float g, float b);
 
 /**
  * 
@@ -47,12 +47,12 @@ int CalcularHue(int cmin, int cmax, int diff, int r, int g, int b);
  * @return saturación;
  * 
  * */
-int CalcularSaturacion(int cmax, int diff);
+float CalcularSaturacion(float cmax, float diff);
 
 /**
  * @param cmax valor máximo entre los colores rojo, verde y azul.
  * 
  * @return Value (del HSV)
  * */
-int CalcularValue(int cmax);
+float CalcularValue(float cmax);
 #endif /* FUNCTIONS_H */

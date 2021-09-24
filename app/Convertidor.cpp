@@ -89,35 +89,35 @@ std::string Convertidor::Gray2Color() {
                 // Defino un arreglo que contiene todo el bloque de datos que me interesa
                 unsigned char* pixel = pixels + (y + heigth * x) * block;
 
-                int red = (int) pixel[0];
-                int green = (int) pixel[1];
-                int blue = (int) pixel[2];
+                float red = (float) pixel[0];
+                float green = (float) pixel[1];
+                float blue = (float) pixel[2];
 
-                int h,s,v;
-                red = (int) red / 255;
-                green = (int) green / 255;
-                blue = (int) blue / 255;
-                int cmax = ColorMax(red,green,blue);
-                int cmin = ColorMin(red,green,blue);
-                int diff = cmax - cmin;
+                float h=-1,s=-1,v=-1;
+               
+                float cmax = ColorMax(red,green,blue);
+                float cmin = ColorMin(red,green,blue);
+                float diff = cmax - cmin;
                 
                 //EN esas 3 funciones esta el problema
                 h = CalcularHue(cmin,cmax,diff,red,green,blue);
                 s = CalcularSaturacion(cmax, diff);
                 v = CalcularValue(cmax);
-                
-
-                
+                int gray = (red + green + blue) / 3;
                 for (int c = 0; c < 3; c++) {
-                    if(index == 0){
-                        jpg[index] = h;
-                    }else if( index == 1){
-                        jpg[index] = s;
-                    }else{
-                        jpg[index] = v;
+                    if(c == 0){
+
+                        jpg[index] = h+gray;
+                    } else{
+                        if(c == 1){
+                            jpg[index] = s+gray;
+                        } else {
+                            jpg[index] = v+gray;
+                        }
                     }
                     index += 1;
-                } 
+                }
+               
             }
         }
 

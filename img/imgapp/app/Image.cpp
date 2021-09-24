@@ -77,7 +77,6 @@ std::string Image::toGrayScale() {
         // Indica el indice en el cuál estoy parado
         unsigned long long index = 0;
         unsigned char* jpg = new unsigned char[width * height * 3];
-
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 unsigned char block = channelCount;

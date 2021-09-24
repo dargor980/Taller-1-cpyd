@@ -9,7 +9,7 @@ void MostrarGrupo()
     std::cout << "Luciano Grandi Morales" << std::endl;
 }
 
-int ColorMax(int r, int g, int b){
+float ColorMax(float r, float g, float b){
     if(r > g){
         if(r > b){
             return r;
@@ -19,7 +19,7 @@ int ColorMax(int r, int g, int b){
     } else return b;
 }
 
-int ColorMin(int r, int g, int b){
+float ColorMin(float r, float g, float b){
     if(r < g){
         if(r < b){
             return r;
@@ -29,23 +29,23 @@ int ColorMin(int r, int g, int b){
     } else return b;
 }
 
-int CalcularHue(int cmin, int cmax, int diff, int r, int g, int b){
+float CalcularHue(float cmin, float cmax, float diff, float r, float g, float b){
     if(cmax == 0 && cmin == 0){
         return 0;
     } else if(cmax == r){
-        return ((60* ((g - b) / diff) + 360) % 360);
+        return (float)((60* ((g - b) / diff) + 360) / (float) 360);
     } else if(cmax == g){
-        return ((60* ((b - r) / diff) + 120) % 360);
-    } else return ((60 *((r-g) / diff) + 240) % 360);
+        return (float)((60* ((b - r) / diff) + 120) / (float) 360);
+    } else return (float)((60 *((r-g) / diff) + 240) / (float) 360);
 
 }
 
-int CalcularSaturacion(int cmax, int diff){
+float CalcularSaturacion(float cmax, float diff){
     if(cmax == 0){
         return 0;
     } else return ((diff / cmax)*100);
 }
 
-int CalcularValue(int cmax){
+float CalcularValue(float cmax){
     return cmax*100;
 }
