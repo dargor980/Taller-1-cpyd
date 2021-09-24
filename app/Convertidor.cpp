@@ -1,5 +1,7 @@
 #include "Convertidor.h"
 #include "Functions.h"
+#include "stb/stb_image.h"
+#include "stb/stb_image_write.h"
 
 Convertidor::Convertidor()
 {
@@ -69,13 +71,13 @@ std::string Convertidor::Gray2Color() {
     if (pixels) {
         // Indica el indice en el cuál estoy parado
         unsigned long long index = 0;
-        unsigned char* jpg = new unsigned char[width * height * 3];
+        unsigned char* jpg = new unsigned char[width * heigth * 3];
 
         for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+            for (int y = 0; y < heigth; y++) {
                 unsigned char block = channelCount;
                 // Defino un arreglo que contiene todo el bloque de datos que me interesa
-                unsigned char* pixel = pixels + (y + height * x) * block;
+                unsigned char* pixel = pixels + (y + heigth * x) * block;
 
                 int red = (int) pixel[0];
                 int green = (int) pixel[1];
@@ -87,6 +89,10 @@ std::string Convertidor::Gray2Color() {
                 blue = blue / 255;
                 int cmax = ColorMax(red,green,blue);
                 int cmin = ColorMin(red,green,blue);
+                int diff = cmax - cmin;
+                h = CalcularHue(cmin,cmax,diff,red,green,blue);
+                s = CalcularSaturacion(cmax, diff);
+                v = CalcularValue(cmax);
                 
 
 
@@ -102,7 +108,7 @@ std::string Convertidor::Gray2Color() {
         }
 
         path = "gris.jpg";
-        stbi_write_jpg(path.c_str(), width, height, 3, jpg, 100);
+        stbi_write_jpg(path.c_str(), width, heigth, 3, jpg, 100);
 
         delete[] jpg;
     }
